@@ -4,6 +4,28 @@
 <meta charset="utf-8">
 <title>Boards</title>
 <style type="text/css">
+@media print {
+	#nav { display: none ! important; }
+	#igrf, #sk, #pt, #lt, #plt, #pbt { display: block; page-break-after: always; }
+	#pt { page-orientation: landscape; }
+}
+
+* { text-align: center; }
+:root {
+	--sk-light: #e9f6da;
+	--sk-medium: #d3ecb6;
+	--sk-dark: #4a6f1d;
+
+	--pt-light: #ffe8ff;
+	--pt-medium: #ffd0ff;
+	--pt-dark: #c500c5;
+	--pt-notes: #d9d9d9;
+
+	--lt-light: #e7f3ff;
+	--lt-medium: #b6daff;
+	--lt-mediumer: #cee7ff;
+	--lt-dark: #0061c2;
+}
 div { display: none; }
 #nav { display: block; }
 #nav a + a { margin-left: 2em; }
@@ -13,17 +35,42 @@ div { display: none; }
 #igrf .subsection { background: pink; font-weight: bold; }
 #igrf > .label { background: light-pink; text-transform: uppercase; font-weight: bold; }
 #igrf-rosters > th { background: black: color: white; }
-#igrf-home, #igrf-visitor { width: 25em; } 
+#igrf-home, #igrf-visitor { width: 25em; }
 
-table { border-spacing: 0; }
+table { border-spacing: 0; width: 100%; }
 tr { padding: 0; margin: 0; }
-th, td { border: thin solid black; } 
+td { border: 1px solid black; }
 
 tr.header { font-size: 6pt; color: white; background: black ! important; height: 4em; }
-#sk tr:nth-child(odd) { background: lightgreen; }
+#sk tr:nth-child(odd) { background: var(--sk-light); }
 th.rot { transform: rotate(270deg); }
 td:nth-child(n + 3 of #sk > tr) { border: 12px; }
-#sk .footer { background: green; font-size: 6pt; }
+#sk .footer { background: var(--sk-medium); font-size: 6pt; }
+#sk-period { background: var(--sk-dark); }
+#sk-team, #sk-date, #sk-jammer-ref { background: var(--sk-medium); }
+#sk .jam, #sk .check { background: var(--sk-light); }
+#sk tr:nth-child(odd) .jam, #sk tr:nth-child(odd) .check { background: var(--sk-medium); }
+#sk .check { min-width: 1em; max-width: 2em; }
+#sk .game-total { background: var(--sk-medium); border-left-width: medium; border-right-width: medium; }
+#sk .jam-total { border-left-width: medium; }
+#sk .footer td { border-width-top: medium; }
+#sk td.lost { border-left-width: medium; }
+#sk td.ni { border-right-width: medium; }
+
+#pt-home-team, #pt-date, #pt-visiting-team { background: var(--pt-light); }
+#pt-period { background: var(--pt-dark); }
+/* #pt tr:nth-child(odd) { background: var(--pt-light); } */
+#pt .penalty { min-width: 1em; max-width: 2em; }
+#pt .pt-note { width: 20%; }
+#pt .pt-note:nth-child(even) { background: var(--pt-note); }
+
+#lt-team, #lt-date { background: var(--lt-light); }
+#lt-period { background: var(--lt-dark); }
+#lt tr:nth-child(even) { background: var(--lt-light); }
+#lt tr:nth-child(odd) .jam, #lt tr:nth-child(odd) .nopivot { background: var(--lt-light); }
+#lt tr:nth-child(even) .jam, #lt tr:nth-child(even) .nopivot { background: var(--lt-mediumer); }
+#lt .box { min-width: 1em; max-width: 2em; background: var(--lt-medium); }
+#lt .skater-number { min-width: 5em; }
 </style>
 <!-- script type="module" src="boards.js"></script -->
 <script>
@@ -33,10 +80,13 @@ function showDiv() {
 	if (current) {
 		current.style.display = "none";
 	}
-	let div = document.getElementById(window.location.hash.substring(1)); //document.getElementById(id);
+	let div = document.getElementById(window.location.hash.substring(1));
 	div.style.display = "block";
 	current = div;
-	return true;
+	if (div.id == "sb") {
+		document.getElementById("nav").style.display = "none";
+	}
+	return true;;
 }
 
 function showNav() {
@@ -58,10 +108,49 @@ function showNav() {
 	}
 }
 </script>
+<style type="text/css">
+#sb > span { position: absolute; display: block; }
+.sb-team-name, .sb-team-logo, .sb-jammer { width: 50vw; }
+.sb-team-name { top: 1vh; }
+.sb-team-logo { top: 10vh; }
+.sb-home { left: 0; }
+.sb-visiting { right: 0; }
+.sb-timeouts { transform: rotate(270deg); }
+.sb-total-score { top: 20vh; background: gray; color: black; font-size: 8em; width: 20vw; }
+.sb-total-score .sb-home { left: 10vw; }
+.sb-jam-score .sb-home { left: 40vw; }
+.sb-jam-score .sb-visiting { right: 40vw; }
+.sb-jam-score { top: 50vh; }
+.sb-total-score .sb-visiting { right: 10vw; }
+.sb-jammer { top: 70vh; }
+</style>
 </head>
 <body>
 
 <div id="nav"></div>
+
+<div id="sb" boards-label="Scoreboard Display" boards-per-team="no" boards-per-period="no">
+<span class="sb-team-name sb-home" id="sb-home-team">Home Team</span>
+<span class="sb-team-name sb-visiting" id="sb-visiting-team">Visiting Team</span>
+<span class="sb-team-logo sb-home" id="sb-home-logo">Home Logo</span>
+<span class="sb-team-logo sb-visiting" id="sb-visiting-logo">Visiting Logo</span><br>
+<span class="sb-timeouts" id="sb-home-timeouts">Home Timeouts</span>
+<span class="sb-total-score sb-home" id="sb-home-total-score">Home Score</span>
+<span class="sb-jam-score sb-home" id="sb-home-jam-score">Jam Score</span>
+<span class="sb-jam-score sb-visiting" id="sb-visiting-jam-score">Jam Score</span>
+<span class="sb-total-score sb-visiting" id="sb-visiting-total-score">Visiting Score</span>
+<span class="sb-timeouts sb-visiting" id="sb-visiting-timeouts">Visiting Timeouts</span><br>
+<span class="sb-jammer sb-home" id="sb-home-jammer">Home Jammer</span>
+<span class="sb-jammer sb-visiting" id="sb-visiting-jammer">Visiting Jammer</span>
+<span class="sb-clock" id="sb-period-clock">Period Clock</span>
+<span class="sb-clock" id="sb-jam-clock">Jam Clock</span>
+</div>
+
+<div id="sbo-classic" boards-label="Scoreboard Operator Panel (Classic)" boards-per-team="no" boards-per-period="no">
+</div>
+
+<div id="sbo-simplified" boards-label="Scoreboard Operator Panel (Simplified)" boards-per-team="no" boards-per-period="no">
+</div>
 
 <div id="igrf" boards-label="IGRF" boards-per-team="no" boards-per-period="no">
 <tr><th colspan="6">WFTDA Interleague Game Reporting Form (IGRF)</th></tr>
@@ -141,18 +230,18 @@ function showNav() {
 <span id="sk-color">Color</span>
 <span id="sk-date">Date</span>
 <span id="sk-keeper">Scorekeeper</span>
-<span id="sk-ref">Jammer Ref</span>
+<span id="sk-jammer-ref">Jammer Ref</span>
 <span id="sk-period">1</span>
 <table>
 <tr class="header"><th>JAM</th><th>Jammer's Number</th><th class="rot">LOST</th><th class="rot">LEAD</th><th class="rot">CALL</th><th class="rot">INJ.</th><th class="rot">NI</th><th>Trip 2</th><th>Trip 3</th><th>Trip 4</th><th>Trip 5</th><th>Trip 6</th><th>Trip 7</th><th>Trip 8</th><th>Trip 9</th><th>Trip 10</th><th>Jam Total</th><th>Game Total</th>
 <script type="text/javascript">
-for (var i = 0; i < 30; i++) {
-	document.write('<tr><td class="jam">&nbsp;</td><td>&nbsp;</td>');
-	for (var j = 0; j < 5; j++) {
-		document.write('<td class="check">&nbsp;</td>');
+for (var i = 0; i < 38; i++) {
+	document.write('<tr class="sk"><td class="jam">&nbsp;</td><td>&nbsp;</td>');
+	for (const field of [ "lost", "lead", "call", "inj", "ni" ]) {
+		document.write('<td class="check ' + field +'">&nbsp;</td>');
 	}
-	for (var j = 1; j < 10; j++) {
-		document.write('<td class="trip">&nbsp;</td>');
+	for (var trip = 2; trip < 11; trip++) {
+		document.write('<td class="trip" trip="' + trip + '">&nbsp;</td>');
 	}
 	document.write('<td class="jam-total">&nbsp;</td><td class="game-total">&nbsp;</td></tr>');
 }
@@ -176,30 +265,30 @@ for (var i = 0; i < 30; i++) {
 for (var i = 0; i < 40; i++) {
 	document.write('<tr>');
 	if (i % 2 == 0) {
-		document.write('<td rowspan="2">&nbsp;</td>');
+		document.write('<td rowspan="2" class="skater-number">&nbsp;</td>');
 	}
 	for (var j = 0; j < 10; j++) {
-		document.write('<td>&nbsp;</td>');
+		document.write('<td class="penalty">&nbsp;</td>');
 	}
 	if (i % 2 == 0) {
-		document.write('<td rowspan="2">&nbsp;</td>');
+		document.write('<td rowspan="2" class="penalty-count">&nbsp;</td>');
 	}
 	document.write('<td class="pt-note">' + (i + 1) + '</td>');
 	if (i % 2 == 0) {
-		document.write('<td rowspan="2">&nbsp;</td>');
+		document.write('<td rowspan="2" class="skater-number">&nbsp;</td>');
 	}
 	for (var j = 0; j < 10; j++) {
-		document.write('<td>&nbsp;</td>');
+		document.write('<td class="penalty">&nbsp;</td>');
 	}
 	if (i % 2 == 0) {
-		document.write('<td rowspan="2">&nbsp;</td>');
+		document.write('<td rowspan="2" class="penalty-count">&nbsp;</td>');
 	}
 	document.write('<td></td>')// TODO: penalty codes go here
 	document.write('</tr>');
 }
 </script>
-<tr><td colspan="2" rowspan="2">Non-Skater Expulsions</td><td>&nbsp;</td><td>&nbsp;</td><td rowspan="2" colspan="7">TOTAL PENALTIES FOR PERIOD 1:</td><td rowspan="2"><td>&nbsp;</td><td colspan="2" rowspan="2">Non-Skater Expulsions</td><td>&nbsp;</td><td>&nbsp;</td><td rowspan="2" colspan="7">TOTAL PENALTIES FOR PERIOD 1:</td><td rowspan="2">&nbsp;</td><td>???</td></tr>
-<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>???</td></tr>
+<tr><td colspan="2" rowspan="2" class="non-skater">Non-Skater<br>Expulsions</td><td>&nbsp;</td><td>&nbsp;</td><td class="non-skater-count">&nbsp;</td><td rowspan="2" colspan="6">TOTAL PENALTIES FOR PERIOD 1:</td><td rowspan="2"><td>&nbsp;</td><td colspan="2" rowspan="2" class="non-skater">Non-Skater<br>Expulsions</td><td>&nbsp;</td><td>&nbsp;</td><td class="non-skater-count">&nbsp;</td><td rowspan="2" colspan="6">TOTAL PENALTIES FOR PERIOD 1:</td><td rowspan="2">&nbsp;</td><td></td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td></td></tr>
 </table>
 </div>
 
@@ -214,14 +303,18 @@ for (var i = 0; i < 40; i++) {
 <script type="text/javascript">
 for (var i = 0; i < 40; i++) {
 	document.write('<tr>');
-	for (var j = 0; j < 22; j++) {
-		document.write('<td>&nbsp;</td>');
+	document.write('<td class="jam">&nbsp;</td>');
+	document.write('<td class="nopivot">&nbsp;</td>');
+	for (var j = 0; j < 5; j++) {
+		document.write('<td class="skater-number">&nbsp;</td>');
+		for (var k = 0; k < 3; k++) {
+			document.write('<td class="box">&nbsp;</td>');
+		}
 	}
 	document.write('</tr>')
 }
 </script>
 </table>
-– = Entered the box mid-jam. S = Entered between jams or continued from previous jam. | = Finished service. Combined with - and S, creates + and $. 3 = Skater injured or needed sub, sits out 3 jams.
 </div>
 
 <div id="plt" boards-label="Penalties-Lineups" boards-per-team="yes" boards-per-period="yes">
