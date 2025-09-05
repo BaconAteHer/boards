@@ -8,6 +8,10 @@
 	#nav { display: none ! important; }
 	#igrf, #sk, #pt, #lt, #plt, #pbt { display: block; page-break-after: always; }
 	#pt { page-orientation: landscape; }
+
+	#sk .check { width: 0.145in ! important; }
+	#sk tr { height: 0.235in ! important; }
+	#sk .trip { width: 0.53in; }
 }
 
 * { text-align: center; }
@@ -86,7 +90,6 @@ function showDiv() {
 	if (div.id == "sb") {
 		document.getElementById("nav").style.display = "none";
 	}
-	return true;;
 }
 
 function showNav() {
@@ -96,12 +99,13 @@ function showNav() {
 		// TODO: apply boards-per-team and boards-per-period attributes
 		if (divs[i] != nav) {
 			let a = document.createElement("a");
-			a.onclick = showDiv;
 			a.href = "#" + divs[i].id;
 			a.innerHTML = divs[i].getAttribute("boards-label");
 			nav.appendChild(a);
 		}
 	}
+
+	addEventListener("hashchange", (event) => { showDiv(); })
 
 	if (window.location.hash) {
 		showDiv();
