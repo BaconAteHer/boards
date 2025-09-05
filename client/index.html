@@ -1,10 +1,283 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
 <meta charset="utf-8">
 <title>Boards</title>
+<style type="text/css">
+div { display: none; }
+#nav { display: block; }
+#nav a + a { margin-left: 2em; }
+/* table { display: none; } */
+#igrf { outline: 2px solid black; }
+#igrf .section { background: black; color: pink; }
+#igrf .subsection { background: pink; font-weight: bold; }
+#igrf > .label { background: light-pink; text-transform: uppercase; font-weight: bold; }
+#igrf-rosters > th { background: black: color: white; }
+#igrf-home, #igrf-visitor { width: 25em; } 
+
+table { border-spacing: 0; }
+tr { padding: 0; margin: 0; }
+th, td { border: thin solid black; } 
+
+tr.header { font-size: 6pt; color: white; background: black ! important; height: 4em; }
+#sk tr:nth-child(odd) { background: lightgreen; }
+th.rot { transform: rotate(270deg); }
+td:nth-child(n + 3 of #sk > tr) { border: 12px; }
+#sk .footer { background: green; font-size: 6pt; }
+</style>
+<!-- script type="module" src="boards.js"></script -->
+<script>
+let current = null;
+
+function showDiv() {
+	if (current) {
+		current.style.display = "none";
+	}
+	let div = document.getElementById(window.location.hash.substring(1)); //document.getElementById(id);
+	div.style.display = "block";
+	current = div;
+	return true;
+}
+
+function showNav() {
+	let nav = document.getElementById("nav");
+	let divs = document.getElementsByTagName("div");
+	for (var i = 0; i < divs.length; i++) {
+		// TODO: apply boards-per-team and boards-per-period attributes
+		if (divs[i] != nav) {
+			let a = document.createElement("a");
+			a.onclick = showDiv;
+			a.href = "#" + divs[i].id;
+			a.innerHTML = divs[i].getAttribute("boards-label");
+			nav.appendChild(a);
+		}
+	}
+
+	if (window.location.hash) {
+		showDiv();
+	}
+}
+</script>
 </head>
 <body>
-Boards
+
+<div id="nav"></div>
+
+<div id="igrf" boards-label="IGRF" boards-per-team="no" boards-per-period="no">
+<tr><th colspan="6">WFTDA Interleague Game Reporting Form (IGRF)</th></tr>
+<tr class="section"><th colspan="6">Section 1. VENUE & ROSTERS (Complete BEFORE the game)</th></tr>
+<tr><td rowspan="2" class="subsection">Location:<td id="igrf-venue"></td><td id="igrf-city"></td><td id="igrf-state"></td><td id="igrf-gameNumber">#</td></tr>
+<tr><td class="label">VENUE NAME</td><td class="label">CITY</td><td class="label">ST/PRV</td><td class="label">GAME #</td></tr>
+<tr><td rowspan="2" class="subsection">Tournament/Multi-Day Event:</td><td id="igrf-event"></td><td id="igrf-host">&nbsp;</td></tr>
+<tr><td class="label">TOURNAMENT/MULTI-DAY EVENT NAME</td><td class="label">HOST LEAGUE NAME</td></tr>
+<tr><td class="subsection">Date:</td><td id="igrf-date"><td class="subsection">Start Time:</td><td id="igrf-time"></td><td class="subsection">Suspension:</td><td>YES | NO</td></tr>
+
+<tr><td colspan="6">
+<table id="igrf-rosters">
+<tr><th colspan="2">TEAM ROSTERS - List in order of Skater number</th></tr>
+<tr>
+<td><table id="igrf-home">
+<tr><th colspan="3">HOME TEAM</th></tr>
+<tr><td class="label">LEAGUE</td><td colspan="2" id="igrf-home-league"></td></tr>
+<tr><td class="label">TEAM</td><td colspan="2" id="igrf-home-team"></td></tr>
+<tr><td class="label">COLOR</td><td colspan="2" id="igrf-home-color"></td></tr>
+<tr><th># of players</th><th>Skater #</th><th>Skater Name</th></tr>
+<tr><td class="label">1</td><td id="igrf-home-1-num"></td><td id="igrf-home-1-name"></td></tr>
+<tr><td class="label">2</td><td id="igrf-home-2-num"></td><td id="igrf-home-2-name"></td></tr>
+<tr><td class="label">3</td><td id="igrf-home-3-num"></td><td id="igrf-home-3-name"></td></tr>
+<tr><td class="label">4</td><td id="igrf-home-4-num"></td><td id="igrf-home-4-name"></td></tr>
+<tr><td class="label">5</td><td id="igrf-home-5-num"></td><td id="igrf-home-5-name"></td></tr>
+<tr><td class="label">6</td><td id="igrf-home-6-num"></td><td id="igrf-home-6-name"></td></tr>
+<tr><td class="label">7</td><td id="igrf-home-7-num"></td><td id="igrf-home-7-name"></td></tr>
+<tr><td class="label">8</td><td id="igrf-home-8-num"></td><td id="igrf-home-8-name"></td></tr>
+<tr><td class="label">9</td><td id="igrf-home-9-num"></td><td id="igrf-home-9-name"></td></tr>
+<tr><td class="label">10</td><td id="igrf-home-10-num"></td><td id="igrf-home-10-name"></td></tr>
+<tr><td class="label">11</td><td id="igrf-home-11-num"></td><td id="igrf-home-11-name"></td></tr>
+<tr><td class="label">12</td><td id="igrf-home-12-num"></td><td id="igrf-home-12-name"></td></tr>
+<tr><td class="label">13</td><td id="igrf-home-13-num"></td><td id="igrf-home-13-name"></td></tr>
+<tr><td class="label">14</td><td id="igrf-home-14-num"></td><td id="igrf-home-14-name"></td></tr>
+<tr><td class="label">15</td><td id="igrf-home-15-num"></td><td id="igrf-home-15-name"></td></tr>
+<tr><td class="label">16</td><td id="igrf-home-16-num"></td><td id="igrf-home-16-name"></td></tr>
+<tr><td class="label">17</td><td id="igrf-home-17-num"></td><td id="igrf-home-17-name"></td></tr>
+<tr><td class="label">18</td><td id="igrf-home-18-num"></td><td id="igrf-home-18-name"></td></tr>
+<tr><td class="label">19</td><td id="igrf-home-19-num"></td><td id="igrf-home-19-name"></td></tr>
+<tr><td class="label">20</td><td id="igrf-home-20-num"></td><td id="igrf-home-20-name"></td></tr>
+</table>
+</td><td><table id="igrf-visitor">
+<tr><th colspan="3">VISITING TEAM</th></tr>
+<tr><td class="label">LEAGUE</td><td colspan="2" id="igrf-visitor-league"></td></tr>
+<tr><td class="label">TEAM</td><td colspan="2" id="igrf-visitor-team"></td></tr>
+<tr><td class="label">COLOR</td><td colspan="2" id="igrf-visitor-color"></td></tr>
+<tr><th># of players</th><th>Skater #</th><th>Skater Name</th></tr>
+<tr><td class="label">1</td><td id="igrf-visitor-1-num"></td><td id="igrf-visitor-1-name"></td></tr>
+<tr><td class="label">2</td><td id="igrf-visitor-2-num"></td><td id="igrf-visitor-2-name"></td></tr>
+<tr><td class="label">3</td><td id="igrf-visitor-3-num"></td><td id="igrf-visitor-3-name"></td></tr>
+<tr><td class="label">4</td><td id="igrf-visitor-4-num"></td><td id="igrf-visitor-4-name"></td></tr>
+<tr><td class="label">5</td><td id="igrf-visitor-5-num"></td><td id="igrf-visitor-5-name"></td></tr>
+<tr><td class="label">6</td><td id="igrf-visitor-6-num"></td><td id="igrf-visitor-6-name"></td></tr>
+<tr><td class="label">7</td><td id="igrf-visitor-7-num"></td><td id="igrf-visitor-7-name"></td></tr>
+<tr><td class="label">8</td><td id="igrf-visitor-8-num"></td><td id="igrf-visitor-8-name"></td></tr>
+<tr><td class="label">9</td><td id="igrf-visitor-9-num"></td><td id="igrf-visitor-9-name"></td></tr>
+<tr><td class="label">10</td><td id="igrf-visitor-10-num"></td><td id="igrf-visitor-10-name"></td></tr>
+<tr><td class="label">11</td><td id="igrf-visitor-11-num"></td><td id="igrf-visitor-11-name"></td></tr>
+<tr><td class="label">12</td><td id="igrf-visitor-12-num"></td><td id="igrf-visitor-12-name"></td></tr>
+<tr><td class="label">13</td><td id="igrf-visitor-13-num"></td><td id="igrf-visitor-13-name"></td></tr>
+<tr><td class="label">14</td><td id="igrf-visitor-14-num"></td><td id="igrf-visitor-14-name"></td></tr>
+<tr><td class="label">15</td><td id="igrf-visitor-15-num"></td><td id="igrf-visitor-15-name"></td></tr>
+<tr><td class="label">16</td><td id="igrf-visitor-16-num"></td><td id="igrf-visitor-16-name"></td></tr>
+<tr><td class="label">17</td><td id="igrf-visitor-17-num"></td><td id="igrf-visitor-17-name"></td></tr>
+<tr><td class="label">18</td><td id="igrf-visitor-18-num"></td><td id="igrf-visitor-18-name"></td></tr>
+<tr><td class="label">19</td><td id="igrf-visitor-19-num"></td><td id="igrf-visitor-19-name"></td></tr>
+<tr><td class="label">20</td><td id="igrf-visitor-20-num"></td><td id="igrf-visitor-20-name"></td></tr>
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+</div>
+
+<div id="sk" boards-label="Scorekeeper" boards-per-team="yes" boards-per-period="yes">
+<span id="sk-team">Team</span>
+<span id="sk-color">Color</span>
+<span id="sk-date">Date</span>
+<span id="sk-keeper">Scorekeeper</span>
+<span id="sk-ref">Jammer Ref</span>
+<span id="sk-period">1</span>
+<table>
+<tr class="header"><th>JAM</th><th>Jammer's Number</th><th class="rot">LOST</th><th class="rot">LEAD</th><th class="rot">CALL</th><th class="rot">INJ.</th><th class="rot">NI</th><th>Trip 2</th><th>Trip 3</th><th>Trip 4</th><th>Trip 5</th><th>Trip 6</th><th>Trip 7</th><th>Trip 8</th><th>Trip 9</th><th>Trip 10</th><th>Jam Total</th><th>Game Total</th>
+<script type="text/javascript">
+for (var i = 0; i < 30; i++) {
+	document.write('<tr><td class="jam">&nbsp;</td><td>&nbsp;</td>');
+	for (var j = 0; j < 5; j++) {
+		document.write('<td class="check">&nbsp;</td>');
+	}
+	for (var j = 1; j < 10; j++) {
+		document.write('<td class="trip">&nbsp;</td>');
+	}
+	document.write('<td class="jam-total">&nbsp;</td><td class="game-total">&nbsp;</td></tr>');
+}
+</script>
+<tr class="footer"><td></td><td>PERIOD TOTALS</td><td class="rot"></td><td class="rot"></td><td class="rot"></td><td class="rot"></td><td class="rot"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</table>
+</div>
+
+<div id="pt" boards-label="Penalties" boards-per-team="no" boards-per-period="no">
+<span id="pt-home-team">Home Team</span>
+<span id="pt-home-color">Color</span>
+<span id="pt-date">Date</span>
+<span id="pt-tracker">Penalty Tracker</span>
+<span id="pt-away-team">Away Team</span>
+<span id="pt-away-color">Color</span>
+<span id="pt-period">1</span>
+<table>
+<tr class="header"><th>#</th><th colspan="9">PENALTY/JAM #</th><th>FO/EXP</th><th>TOTAL</th><th>NOTES</th><th>#</th><th colspan="9">PENALTY/JAM #</th><th>FO/EXP</th><th>TOTAL</th><th>Codes</th></tr>
+<script type="text/javascript">
+// TODO: penalty codes
+for (var i = 0; i < 40; i++) {
+	document.write('<tr>');
+	if (i % 2 == 0) {
+		document.write('<td rowspan="2">&nbsp;</td>');
+	}
+	for (var j = 0; j < 10; j++) {
+		document.write('<td>&nbsp;</td>');
+	}
+	if (i % 2 == 0) {
+		document.write('<td rowspan="2">&nbsp;</td>');
+	}
+	document.write('<td class="pt-note">' + (i + 1) + '</td>');
+	if (i % 2 == 0) {
+		document.write('<td rowspan="2">&nbsp;</td>');
+	}
+	for (var j = 0; j < 10; j++) {
+		document.write('<td>&nbsp;</td>');
+	}
+	if (i % 2 == 0) {
+		document.write('<td rowspan="2">&nbsp;</td>');
+	}
+	document.write('<td></td>')// TODO: penalty codes go here
+	document.write('</tr>');
+}
+</script>
+<tr><td colspan="2" rowspan="2">Non-Skater Expulsions</td><td>&nbsp;</td><td>&nbsp;</td><td rowspan="2" colspan="7">TOTAL PENALTIES FOR PERIOD 1:</td><td rowspan="2"><td>&nbsp;</td><td colspan="2" rowspan="2">Non-Skater Expulsions</td><td>&nbsp;</td><td>&nbsp;</td><td rowspan="2" colspan="7">TOTAL PENALTIES FOR PERIOD 1:</td><td rowspan="2">&nbsp;</td><td>???</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>???</td></tr>
+</table>
+</div>
+
+<div id="lt" boards-label="Lineups" boards-per-team="yes" boards-per-period="yes">
+<span id="lt-team">Home Team</span>
+<span id="lt-color">Color</span>
+<span id="lt-date">Date</span>
+<span id="lt-tracker">Lineup Tracker</span>
+<span id="lt-period">1</span>
+<table>
+<tr class="header"><th>Jam</th><th>noPivot</th><th>Jammer</th><th colspan="3">Box</th><th>Pivot</th><th colspan="3">Box</th><th>Blocker</th><th colspan="3">Box</th><th>Blocker</th><th colspan="3">Box</th><th>Blocker</th><th colspan="3">Box</th><th>Team Roster</th></tr>
+<script type="text/javascript">
+for (var i = 0; i < 40; i++) {
+	document.write('<tr>');
+	for (var j = 0; j < 22; j++) {
+		document.write('<td>&nbsp;</td>');
+	}
+	document.write('</tr>')
+}
+</script>
+</table>
+– = Entered the box mid-jam. S = Entered between jams or continued from previous jam. | = Finished service. Combined with - and S, creates + and $. 3 = Skater injured or needed sub, sits out 3 jams.
+</div>
+
+<div id="plt" boards-label="Penalties-Lineups" boards-per-team="yes" boards-per-period="yes">
+<span id="plt-team">Home Team</span>
+<span id="plt-color">Color</span>
+<span id="plt-date">Date</span>
+<span id="plt-tracker">Lineup Tracker</span>
+<span id="plt-period">1</span>
+<table>
+<tr class="header"><th>Jam</th><th>noPivot</th><th>Jammer</th><th colspan="3">Box</th><th>Pivot</th><th colspan="3">Box</th><th>Blocker</th><th colspan="3">Box</th><th>Blocker</th><th colspan="3">Box</th><th>Blocker</th><th colspan="3">Box</th><th></th><th>Roster</th><th colspan="9"><th colspan="2">FO/EXP</th></tr>
+<script type="text/javascript">
+for (var i = 0; i < 40; i++) {
+	document.write('<tr>');
+	for (var j = 0; j < 35; j++) {
+		if (j == 23) {
+			if (i % 2 == 0) {
+				document.write('<td rowspan="2">&nbsp;</td>');
+			}
+		} else {
+			document.write('<td>&nbsp;</td>');
+		}
+	}
+	document.write('</tr>');
+}
+</script>
+<tr><td colspan="18" rowspan="3">&nbsp;</td><td>Non-Skater Expulsions</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td rowspan="2">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td colspan="10"></td><td colspan="7">Total Penalties for Period 1:</td></tr>
+</table>
+</div>
+
+<div id="pbt" boards-label="Penalty Box" boards-per-team="yes" boards-per-period="yes">
+<span id="pbt-team">Home Team</span>
+<span id="pbt-color">Color</span>
+<span id="pbt-date">Date</span>
+<span id="pbt-tracker">Penalty Box Timer</span>
+<span id="pbt-period"></span>
+<table>
+<tr class="header"><th>Period</th><th>Jam #</th><th>Btwn Jams</th><th>Team</th><th>Skater #</th><th>Pos</th><th>In</th><th>Stand</th><th>Done</th><th colspan="3">Time at End of Jam</th><th class="spacer">&nbsp;</th><th class="pbt-jam" colspan="2">Jam #</th><th class="spacer">&nbsp;</th><th class="pbt-total">Total Penalties</th></tr>
+<script>
+for (var i = 0; i < 40; i++) {
+	document.write('<tr>');
+	for (var j = 0; j < 17; j++) {
+		if (j == 13 || j == 14) {
+			document.write('<td>' + (i + 1) + '</td>');
+		} else {
+			document.write('<td>&nbsp</td>');
+		}
+	}
+	document.write('</tr>');
+}
+</script>
+</table>
+</div>
+
+<script>showNav();</script>
+
 </body>
 </html>
