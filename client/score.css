@@ -1,0 +1,42 @@
+:root {
+	--sk-light: #e9f6da;
+	--sk-medium: #d3ecb6;
+	--sk-dark: #4a6f1d;
+}
+
+@media print {
+	#sk .check { width: 0.145in ! important; }
+	#sk tr { height: 0.235in ! important; }
+	#sk .trip { width: 0.53in; }
+}
+
+div > span { display: block }
+div.previous > span { display: table-cell; }
+
+tr.header { font-size: 6pt; color: white; background: black ! important; height: 4em; }
+th.rot { transform: rotate(270deg); }
+
+#sk > div { width: 95vw; padding: 0; margin: 0; }
+/* div.trips { width: 100%; } */
+
+.jammer { width: 40%; }
+.jam, .jammer, .lost, .lead, .call, .inj, .ni { display: table-cell; min-width: 10%; height: 12vh; border: thin solid black; margin: 0; padding: 0; font-size: 8vh; }
+.trip { display: table-cell; height: 12vh; width: 30%; border: thin solid black; margin: 0; padding: 0; font-size: 8vh; }
+.jam-total, .game-total { height: 12vh; border: thin solid black; display: table-cell; width: 50%; }
+
+.jaminfo, .trips, .totals { width: 100%; margin: 0; padding: 0; display: flex; flex-wrap: nowrap; font-size: 8vh; }
+
+/* div.toggles, div.trips, div.totals { width: 90vw; } */
+.trips:before, .jam:before, .jammer:before, .lost:before, .lead:before, .call:before, .inj:before, .ni:before, .trips:before, .jam-total:before, .game-total:before { background: black; color: white; font-size: 3vh; clear: right; display: block; }
+.jam:before { content: "Jam"; }
+.jammer:before { content: "Jammer"; }
+.lost:before { content: "Lost"; }
+.lead:before { content: "Lead"; }
+.call:before { content: "Call"; }
+.inj:before { content: "Inj"; }
+.ni:before { content: "NI"; }
+.trips:before { content: "TRIPS"; }
+.jam-total:before { content: "Jam Total"; }
+.game-total:before { content: "Game Total"; }
+
+option { text-align: left; }
