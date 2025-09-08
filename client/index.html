@@ -8,18 +8,12 @@
 	#nav { display: none ! important; }
 	#igrf, #sk, #pt, #lt, #plt, #pbt { display: block; page-break-after: always; }
 	#pt { page-orientation: landscape; }
-
-	#sk .check { width: 0.145in ! important; }
-	#sk tr { height: 0.235in ! important; }
-	#sk .trip { width: 0.53in; }
 }
+
+div.controls { position: absolute; bottom: 0; }
 
 * { text-align: center; }
 :root {
-	--sk-light: #e9f6da;
-	--sk-medium: #d3ecb6;
-	--sk-dark: #4a6f1d;
-
 	--pt-light: #ffe8ff;
 	--pt-medium: #ffd0ff;
 	--pt-dark: #c500c5;
@@ -30,7 +24,9 @@
 	--lt-mediumer: #cee7ff;
 	--lt-dark: #0061c2;
 }
-div { display: none; }
+div[boards-label] { display: none; }
+.invalid { color: red; }
+//#sb, #sbo-classic, #sbo, #igrf, #pt, #lt, #plt, #pbt { display : none; }
 #nav { display: block; position: absolute; }
 #menu { display: none; position: absolute; width: 20vw; height: 90vh; background: black; }
 #menu a { display: block; color: white; text-align: left; }
@@ -45,22 +41,6 @@ div { display: none; }
 table { border-spacing: 0; width: 100%; }
 tr { padding: 0; margin: 0; }
 td { border: 1px solid black; }
-
-tr.header { font-size: 6pt; color: white; background: black ! important; height: 4em; }
-#sk tr:nth-child(odd) { background: var(--sk-light); }
-th.rot { transform: rotate(270deg); }
-td:nth-child(n + 3 of #sk > tr) { border: 12px; }
-#sk .footer { background: var(--sk-medium); font-size: 6pt; }
-#sk-period { background: var(--sk-dark); }
-#sk-team, #sk-date, #sk-jammer-ref { background: var(--sk-medium); }
-#sk .jam, #sk .check { background: var(--sk-light); }
-#sk tr:nth-child(odd) .jam, #sk tr:nth-child(odd) .check { background: var(--sk-medium); }
-#sk .check { min-width: 1em; max-width: 2em; }
-#sk .game-total { background: var(--sk-medium); border-left-width: medium; border-right-width: medium; }
-#sk .jam-total { border-left-width: medium; }
-#sk .footer td { border-width-top: medium; }
-#sk td.lost { border-left-width: medium; }
-#sk td.ni { border-right-width: medium; }
 
 #pt-home-team, #pt-date, #pt-visiting-team { background: var(--pt-light); }
 #pt-period { background: var(--pt-dark); }
@@ -77,7 +57,8 @@ td:nth-child(n + 3 of #sk > tr) { border: 12px; }
 #lt .box { min-width: 1em; max-width: 2em; background: var(--lt-medium); }
 #lt .skater-number { min-width: 5em; }
 </style>
-<!-- script type="module" src="boards.js"></script -->
+<link rel="stylesheet" href="score.css">
+<script type="module" src="boards.js"></script>
 <script>
 let current = null;
 
@@ -147,28 +128,30 @@ function buildNav() {
 		menu.appendChild(a);
 	}
 	for (var i = 0; i < divs.length; i++) {
+		let label = divs[i].getAttribute("boards-label");
+		if (label == null) {
+			continue;
+		}
+
 		let perTeam = divs[i].getAttribute("boards-per-team");
 		let perPeriod = divs[i].getAttribute("boards-per-period");
-		let label = divs[i].getAttribute("boards-label");
 		let id = divs[i].id;
-		if (divs[i].id != "nav") {
-			if (perTeam == "yes" && perPeriod == "yes") {
-				for (var team of [ "home", "away" ]) { /* TODO: pull names from game */
-					for (var period = 1; period <= 2; period++) { /* TODO: pull from game settings */
-						addLink(id, label, team, period);
-					}
+		if (perTeam == "yes" && perPeriod == "yes") {
+			for (var team of [ "home", "away" ]) { /* TODO: pull names from game */
+				for (var period = 1; period <= 2; period++) { /* TODO: pull from game settings */
+					addLink(id, label, team, period);
 				}
-			} else if (perTeam == "yes") {
-				for (var team of [ "home", "away" ]) {
-					addLink(id, label, team, null);
-				}
-			} else if (perPeriod == "yes") {
-				for (var period = 1; period <= 2; period++) {
-					addLink(id, label, null, period);
-				}
-			} else {
-				addLink(id, label, null, null);
 			}
+		} else if (perTeam == "yes") {
+			for (var team of [ "home", "away" ]) {
+				addLink(id, label, team, null);
+			}
+		} else if (perPeriod == "yes") {
+			for (var period = 1; period <= 2; period++) {
+				addLink(id, label, null, period);
+			}
+		} else {
+			addLink(id, label, null, null);
 		}
 	}
 }
@@ -301,28 +284,22 @@ function showNav() {
 </div>
 
 <div id="sk" boards-label="Scorekeeper" boards-per-team="yes" boards-per-period="yes">
-<span id="sk-team">Team</span>
-<span id="sk-color">Color</span>
-<span id="sk-date">Date</span>
-<span id="sk-keeper">Scorekeeper</span>
-<span id="sk-jammer-ref">Jammer Ref</span>
-<span id="sk-period">1</span>
+<br>
+<!--
+<span class="team-name" id="sk-team">Team</span>
+<span class="team-color" id="sk-color">Color</span>
+<span class="game-date" id="sk-date">Date</span>
+<span class="nso-sk" id="sk-keeper">Scorekeeper</span>
+<span class="so-jr" id="sk-jammer-ref">Jammer Ref</span>
+<span class="period-number" id="sk-period">1</span>
+-->
 <table>
 <tr class="header"><th>JAM</th><th>Jammer's Number</th><th class="rot">LOST</th><th class="rot">LEAD</th><th class="rot">CALL</th><th class="rot">INJ.</th><th class="rot">NI</th><th>Trip 2</th><th>Trip 3</th><th>Trip 4</th><th>Trip 5</th><th>Trip 6</th><th>Trip 7</th><th>Trip 8</th><th>Trip 9</th><th>Trip 10</th><th>Jam Total</th><th>Game Total</th>
-<script type="text/javascript">
-for (var i = 0; i < 38; i++) {
-	document.write('<tr class="sk"><td class="jam">&nbsp;</td><td>&nbsp;</td>');
-	for (const field of [ "lost", "lead", "call", "inj", "ni" ]) {
-		document.write('<td class="check ' + field +'">&nbsp;</td>');
-	}
-	for (var trip = 2; trip < 11; trip++) {
-		document.write('<td class="trip" trip="' + trip + '">&nbsp;</td>');
-	}
-	document.write('<td class="jam-total">&nbsp;</td><td class="game-total">&nbsp;</td></tr>');
-}
-</script>
+<!--
 <tr class="footer"><td></td><td>PERIOD TOTALS</td><td class="rot"></td><td class="rot"></td><td class="rot"></td><td class="rot"></td><td class="rot"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+-->
 </table>
+<div class="controls"><input class="star-pass-button" type="button" value="Star Pass"><input class="next-jam-button" type="button" value="Next Jam"></div>
 </div>
 
 <div id="pt" boards-label="Penalties" boards-per-team="no" boards-per-period="yes">
