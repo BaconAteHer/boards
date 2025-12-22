@@ -1,6 +1,7 @@
 :root {
 	--crg-gray: #bbb;
 	--crg-green: #6fdf6f;
+	--crg-timing-bg: #644;
 }
 
 #sk-sheets {
@@ -10,42 +11,72 @@
 }
 
 iframe {
-	width: 48%;
+	width: 49%;
 	margin: 0;
 	padding: 0;
+	border: 0;
 }
 
-#team-1, #sk-1 {
-	float: left;
-	width: 45%;
-	border: thin solid red;
+#main-panel > div {
+	background: var(--crg-gray);
 }
 
-#team-2, #sk-2 {
-	float: right;
-	width: 45%;
-	border: thin solid blue;
+[team="0"] {
+	margin-left: 0;
+	margin-right: auto;
 }
 
-#clocks {
+[team="1"] {
+	margin-right: 0;
+	margin-left: auto;
+}
+
+#controls, #timing, #clocks, #main-panel, #sk-sheets {
 	clear: both;
 	display: flex;
+	width: 100%;
 }
 
-#sk-sheets {
-	position: absolute;
-	bottom: 0;
+#controls {
+	background: var(--crg-gray);
 }
 
-.clock {
+#controls button, #timing button {
+	display: block;
+	text-align: center;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#timing {
+	background-color: var(--crg-timing-bg);
+}
+
+#timing button {
+	font-size: large;
+}
+
+[clock] {
 	background: var(--crg-gray);
 	width: 15em;
 	text-align: center;
 	margin: 1em;
 }
 
+[clock] span {
+	display: block;
+}
+
+[clock][running] > .name {
+	background-color: var(--crg-green);
+}
+
 button[pressed] {
 	background-color: var(--crg-green);
 }
 
-.clock span { display: block; }
+.toggles > button + button{
+	margin-left: -0.5em;
+}

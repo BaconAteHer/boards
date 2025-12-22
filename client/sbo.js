@@ -13,7 +13,7 @@ class Scoreboard {
 
 	set_trip_points(e) {
 		console.log("Team", get_attr(e.target, "team"));
-		console.log(e.target.getAttribute("val"));
+		console.log(e.target.getAttribute("value"));
 	}
 
 	start_jam(e) {
@@ -22,6 +22,15 @@ class Scoreboard {
 		for (let i = 0; i < jams.length; i++) {
 			jams[i].innerText = this.jam;
 		}
+	}
+
+	end(e) {
+	}
+
+	timeout(e) {
+	}
+
+	undo(e) {
 	}
 
 	toggle(e) {
