@@ -35,6 +35,7 @@ iframe {
 	clear: both;
 	display: flex;
 	width: 100%;
+	margin-top: 0.5em;
 }
 
 #controls {
@@ -62,7 +63,7 @@ iframe {
 	background: var(--crg-gray);
 	width: 15em;
 	text-align: center;
-	margin: 1em;
+	margin: auto;
 }
 
 [clock] span {

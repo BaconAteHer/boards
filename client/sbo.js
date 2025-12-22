@@ -35,10 +35,18 @@ class Scoreboard {
 
 	toggle(e) {
 		console.log(e.target);
-		if (e.target.hasAttribute("pressed")) {
-			e.target.removeAttribute("pressed");
+		const t = e.target;
+		const val = t.getAttribute("value");
+		if (t.hasAttribute("pressed")) {
+			t.removeAttribute("pressed");
+			if (val == "show-tabs") {
+				document.querySelector("#tabs").style.display = "none";
+			}
 		} else {
-			e.target.setAttribute("pressed", true);
+			t.setAttribute("pressed", true);
+			if (val == "show-tabs") {
+				document.querySelector("#tabs").style.display = "block";
+			}
 		}
 	}
 }
