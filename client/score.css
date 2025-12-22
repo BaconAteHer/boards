@@ -28,12 +28,18 @@
 
 table { width: 100%; }
 
+table { padding: 0; }
+thead, tbody, tfoot, tr { margin: 0; padding: 0; }
+
 div > span { display: block }
 div.previous > span { display: table-cell; }
 
-table input { width: 2em; margin: 0; }
-.jammer > input { width: 4em; }
-td { text-align: center; margin: 0; }
+td.trip { width: clamp(1em, 2em, 3em); }
+table input { margin: 0; width: 100%; text-align: center; }
+// .jammer > input { width: 4em; }
+td, th { text-align: center; margin: 0; padding: 0; }
+tr { padding: 0; margin: 0; }
+
 
 tr.header { font-size: 6pt; color: white; background: black ! important; height: 4em; }
 
