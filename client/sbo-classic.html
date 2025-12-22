@@ -28,7 +28,7 @@
 	<button id="end-of-period">End of Period Controls</button>
 </div>
 <div id="timing">
-	<button id="start-jam">Start Jam</button>
+	<button fn="start_jam">Start Jam</button>
 	<button id="lineup">Lineup</button>
 	<button id="timeout">Timeout</button>
 	<button id="undo">---</button>
@@ -37,10 +37,10 @@
 	<span class="logo"></span>
 	<span class="name"></span>
 	<br>
-	<button id="points-1-minus" team="1" class="trip-points">Trip Pts -1</button>
+	<button fn="set_trip_points" team="1" val="inc">Trip Pts -1</button>
 	<span class="jam-points">Jam Pts: <span class="points">0</span></span>
 	<span class="game-points">0</span>
-	<button id="points-1-plus" team="1" class="trip-points">Trip Pts +1</button>
+	<button fn="set_trip_points" team="1" val="dec">Trip Pts +1</button>
 	<br>
 	<button id="remove-trip-1">Remove Trip</button>
 	<span class="trip-points">Trip Pts: <output class="points">0</output></span>
@@ -83,10 +83,10 @@
 	<span class="name"></span>
 	<span class="logo"></span>
 	<br>
-	<button id="points-2-plus" team="2" class="trip-points">Trip Pts +1</button>
+	<button fn="set_trip_points" team="2" val="inc">Trip Pts +1</button>
 	<span class="jam-points">Jam Pts: <span class="points">0</span></span>
 	<span class="game-points">0</span>
-	<button id="points-2-minus" team="2" class="trip-points">Trip Pts -1</button>
+	<button fn="set_trip_points" team="2" val="dec">Trip Pts -1</button>
 	<br>
 	<button id="add-trip-2">Add Trip</button>
 	<span class="trip-points">Trip Pts: <output class="points">0</output></span>
