@@ -11,6 +11,23 @@
 	th.rot { transform: rotate(270deg); }
 }
 
+.metadata {
+	display: flex;
+	width: 100%;
+}
+
+.metadata > span {
+	display: block;
+	margin: auto;
+	text-align: center;
+}
+
+.metadata input {
+	width: 10em;
+}
+
+table { width: 100%; }
+
 div > span { display: block }
 div.previous > span { display: table-cell; }
 
@@ -23,12 +40,14 @@ tr.header { font-size: 6pt; color: white; background: black ! important; height:
 #sk > div { width: 95vw; padding: 0; margin: 0; }
 /* div.trips { width: 100%; } */
 
+/*
 .jammer { width: 40%; }
-.jam, .jammer, .lost, .lead, .call, .inj, .ni { display: table-cell; min-width: 10%; height: 12vh; border: thin solid black; margin: 0; padding: 0; font-size: 8vh; }
+//.jam, .jammer, .lost, .lead, .call, .inj, .ni { display: table-cell; min-width: 10%; height: 12vh; border: thin solid black; margin: 0; padding: 0; font-size: 8vh; }
 .trip { display: table-cell; height: 12vh; width: 30%; border: thin solid black; margin: 0; padding: 0; font-size: 8vh; }
 .jam-total, .game-total { height: 12vh; border: thin solid black; display: table-cell; width: 50%; }
 
 .jaminfo, .trips, .totals { width: 100%; margin: 0; padding: 0; display: flex; flex-wrap: nowrap; font-size: 8vh; }
+*/
 
 /* div.toggles, div.trips, div.totals { width: 90vw; } */
 .trips:before, .jam:before, .jammer:before, .lost:before, .lead:before, .call:before, .inj:before, .ni:before, .trips:before, .jam-total:before, .game-total:before { background: black; color: white; font-size: 3vh; clear: right; display: block; }
@@ -48,4 +67,6 @@ tr.header { font-size: 6pt; color: white; background: black ! important; height:
 
 option { text-align: left; }
 
-.inside-iframe .metadata, .inside-iframe .controls, .inside-iframe tfoot { display: none; }
+.inside-iframe .metadata, .inside-iframe .controls, .inside-iframe tfoot {
+	display: none;
+}

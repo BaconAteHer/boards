@@ -41,17 +41,14 @@ class Score {
 
 	update_jam(e) {
 		let el = e.target;
-		console.log(el);
 		while (el && el.tagName != "TR") {
 			el = el.parentNode;
-			console.log("new el", el);
 		}
 		let trips = el.querySelectorAll(".trip input");
 		var sum = 0;
 		for (let i = 0; i < trips.length; i++) {
 			let v = trips[i].value ? parseInt(trips[i].value) : 0;
 			sum += v;
-			console.log(sum);
 		}
 
 		let jam_total = el.querySelector(".jam-total output");
@@ -64,6 +61,28 @@ class Score {
 			total += parseInt(jt[i].value);
 			gt[i].value = total;
 		}
+
+		const tfoot = document.querySelector("tfoot");
+		const checks = [ "lost", "lead", "call", "inj", "ni" ];
+		for (var c in checks) {
+			let count = tfoot.querySelector("." + checks[c] + " output");
+			let inputs = document.querySelectorAll("." + checks[c] + " input");
+			let checked = 0;
+			for (let i = 0; i < inputs.length; i++) {
+				if (inputs[i].checked) {
+					checked++;
+				}
+			}
+			console.log(checks[c], checked);
+			if (checked == 0) {
+				count.value = "";
+			} else {
+				count.value = checked;
+			}
+		}
+
+		/* TODO: trip totals */
+		/* TODO: period point totals */
 	}
 }
 

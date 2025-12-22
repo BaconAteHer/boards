@@ -14,12 +14,12 @@
 <div id="sk">
 <br>
 <div class="metadata">
-<span class="team-name" id="sk-team">Team</span>
-<span class="team-color" id="sk-color">Color</span>
-<span class="game-date" id="sk-date">Date</span>
-<span class="nso-sk" id="sk-keeper">Scorekeeper</span>
-<span class="so-jr" id="sk-jammer-ref">Jammer Ref</span>
-<span class="period-number" id="sk-period">1</span>
+<span class="team-name" id="sk-team">Team<br><input></input></span>
+<span class="team-color" id="sk-color">Color<br><input></input></span>
+<span class="game-date" id="sk-date">Date<br><input></input></span>
+<span class="nso-sk" id="sk-keeper">Scorekeeper<br><input></input></span>
+<span class="so-jr" id="sk-jammer-ref">Jammer Ref<br><input></input></span>
+<span class="period-number" id="sk-period">Period<br><input value="1"></input></span>
 </div>
 <table>
 <thead><tr class="header">
@@ -67,27 +67,27 @@
 <tfoot><tr class="footer">
 	<td></td>
 	<td>PERIOD TOTALS</td>
-	<td class="rot"></td>
-	<td class="rot"></td>
-	<td class="rot"></td>
-	<td class="rot"></td>
-	<td class="rot"></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
+	<td class="lost"><output></output></td>
+	<td class="lead"><output></output></td>
+	<td class="call"><output></output></td>
+	<td class="inj"><output></output></td>
+	<td class="ni"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="trip"><output></output></td>
+	<td class="period-total"><output></output></td>
+	<td class="period-game-total"><output></output></td>
 </tr></tfoot>
 </table>
 <div class="controls">
-	<button fn="star_pass">Star Pass</button>
-	<button fn="next_jam">Next Jam</button>
+	<button accesskey="s" fn="star_pass">Star Pass</button>
+	<button accesskey="n" fn="next_jam">Next Jam</button>
 </div>
 <datalist id="jammers">
 	<option value="5309">5309</option>
