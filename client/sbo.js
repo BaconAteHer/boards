@@ -1,4 +1,4 @@
-import { bind_functions } from './bind.js';
+import { bind_functions, get_attr } from './boards.js';
 
 class Scoreboard {
 	constructor() {
@@ -12,7 +12,7 @@ class Scoreboard {
 	}
 
 	set_trip_points(e) {
-		console.log(e.target.getAttribute("team"));
+		console.log("Team", get_attr(e.target, "team"));
 		console.log(e.target.getAttribute("val"));
 	}
 
@@ -21,6 +21,15 @@ class Scoreboard {
 		let jams = document.querySelectorAll(".jam");
 		for (let i = 0; i < jams.length; i++) {
 			jams[i].innerText = this.jam;
+		}
+	}
+
+	toggle(e) {
+		console.log(e.target);
+		if (e.target.hasAttribute("pressed")) {
+			e.target.removeAttribute("pressed");
+		} else {
+			e.target.setAttribute("pressed", true);
 		}
 	}
 }

@@ -13,12 +13,14 @@
 
 <div id="sk" boards-label="Scorekeeper" boards-per-team="yes" boards-per-period="yes">
 <br>
+<div class="metadata">
 <span class="team-name" id="sk-team">Team</span>
 <span class="team-color" id="sk-color">Color</span>
 <span class="game-date" id="sk-date">Date</span>
 <span class="nso-sk" id="sk-keeper">Scorekeeper</span>
 <span class="so-jr" id="sk-jammer-ref">Jammer Ref</span>
 <span class="period-number" id="sk-period">1</span>
+</div>
 <table>
 <thead><tr class="header">
 	<th>JAM</th>
@@ -42,22 +44,22 @@
 </tr></thead>
 <tbody>
 	<template><tr>
-	<td class="jam-number"></td>
+	<td class="jam"></td>
 	<td class="jammer"></td>
-	<td class="lost-lead"></td>
+	<td class="lost"></td>
 	<td class="lead"></td>
 	<td class="call"></td>
 	<td class="inj"></td>
-	<td class="ni"></td><
-	<td class="trip-2"></td>
-	<td class="trip-3"></td>
-	<td class="trip-4"></td>
-	<td class="trip-5"></td>
-	<td class="trip-6"></td>
-	<td class="trip-7"></td>
-	<td class="trip-8"></td>
-	<td class="trip-9"></td>
-	<td class="trip-10"></td>
+	<td class="ni"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
+	<td class="trip"></td>
 	<td class="jam-total"></td>
 	<td class="game-total"></td>
 	</tr></template>
@@ -88,6 +90,12 @@
 	<input class="next-jam-button" type="button" value="Next Jam">
 </div>
 </div>
+
+<script>
+if (window.parent !== window) {
+    document.documentElement.classList.add('inside-iframe');
+}
+</script>
 
 </body>
 </html>

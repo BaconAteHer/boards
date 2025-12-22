@@ -28,6 +28,8 @@ th.rot { transform: rotate(270deg); }
 
 /* div.toggles, div.trips, div.totals { width: 90vw; } */
 .trips:before, .jam:before, .jammer:before, .lost:before, .lead:before, .call:before, .inj:before, .ni:before, .trips:before, .jam-total:before, .game-total:before { background: black; color: white; font-size: 3vh; clear: right; display: block; }
+
+/*
 .jam:before { content: "Jam"; }
 .jammer:before { content: "Jammer"; }
 .lost:before { content: "Lost"; }
@@ -38,5 +40,8 @@ th.rot { transform: rotate(270deg); }
 .trips:before { content: "TRIPS"; }
 .jam-total:before { content: "Jam Total"; }
 .game-total:before { content: "Game Total"; }
+*/
 
 option { text-align: left; }
+
+.inside-iframe .metadata, .inside-iframe .controls, .inside-iframe tfoot { display: none; }
