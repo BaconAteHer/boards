@@ -1,0 +1,31 @@
+#sk-sheets {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+iframe {
+	width: 48%;
+	margin: 0;
+	padding: 0;
+}
+
+#team-1, #sk-1 {
+	float: left;
+	width: 45%;
+	border: thin solid red;
+}
+
+#team-2, #sk-2 {
+	float: right;
+	width: 45%;
+	border: thin solid blue;
+}
+
+#period {
+	clear: both;
+}
+
+div.clock {
+	width: 15%;
+}

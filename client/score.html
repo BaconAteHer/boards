@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scorekeeper - Boards</title>
+<link rel="stylesheet" href="score.css">
+<script type="module" src="score.js"></script>
+</head>
+<body>
+
+<div id="nav"></div>
+
+<div id="sk" boards-label="Scorekeeper" boards-per-team="yes" boards-per-period="yes">
+<br>
+<span class="team-name" id="sk-team">Team</span>
+<span class="team-color" id="sk-color">Color</span>
+<span class="game-date" id="sk-date">Date</span>
+<span class="nso-sk" id="sk-keeper">Scorekeeper</span>
+<span class="so-jr" id="sk-jammer-ref">Jammer Ref</span>
+<span class="period-number" id="sk-period">1</span>
+<table>
+<thead><tr class="header">
+	<th>JAM</th>
+	<th>Jammer's Number</th>
+	<th class="rot">LOST</th>
+	<th class="rot">LEAD</th>
+	<th class="rot">CALL</th>
+	<th class="rot">INJ.</th>
+	<th class="rot">NI</th>
+	<th>Trip 2</th>
+	<th>Trip 3</th>
+	<th>Trip 4</th>
+	<th>Trip 5</th>
+	<th>Trip 6</th>
+	<th>Trip 7</th>
+	<th>Trip 8</th>
+	<th>Trip 9</th>
+	<th>Trip 10</th>
+	<th>Jam Total</th>
+	<th>Game Total</th>
+</tr></thead>
+<tbody>
+	<template><tr>
+	<td class="jam-number"></td>
+	<td class="jammer"></td>
+	<td class="lost-lead"></td>
+	<td class="lead"></td>
+	<td class="call"></td>
+	<td class="inj"></td>
+	<td class="ni"></td><
+	<td class="trip-2"></td>
+	<td class="trip-3"></td>
+	<td class="trip-4"></td>
+	<td class="trip-5"></td>
+	<td class="trip-6"></td>
+	<td class="trip-7"></td>
+	<td class="trip-8"></td>
+	<td class="trip-9"></td>
+	<td class="trip-10"></td>
+	<td class="jam-total"></td>
+	<td class="game-total"></td>
+	</tr></template>
+</tbody>
+<tfoot><tr class="footer">
+	<td></td>
+	<td>PERIOD TOTALS</td>
+	<td class="rot"></td>
+	<td class="rot"></td>
+	<td class="rot"></td>
+	<td class="rot"></td>
+	<td class="rot"></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr></tfoot>
+</table>
+<div class="controls">
+	<input class="star-pass-button" type="button" value="Star Pass">
+	<input class="next-jam-button" type="button" value="Next Jam">
+</div>
+</div>
+
+</body>
+</html>

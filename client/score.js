@@ -2,7 +2,15 @@ import { Toggle } from "./toggle.js"
 import { Skater } from "./skater.js"
 
 class Score {
-	constructor(div, parent, jamNumber) {
+	constructor() {
+		const tbody = document.querySelector("tbody");
+		const template = document.querySelector("template");
+		const clone = document.importNode(template.content, true);
+		//let td = clone.querySelectorAll("td");
+		tbody.appendChild(clone);
+	}
+	
+	old_constructor(div, parent, jamNumber) {
 		this.parent = parent;
 
 		this.div = document.createElement("div");
@@ -42,7 +50,7 @@ class Score {
 			trip.max = 4;
 			trip.onkeypress = this.updateTrip;
 			trip.onblur = this.changeTrip;
-			trip.contentEditable = "plaintext-only";
+			trip.contentEditable = "true"; //"plaintext-only";
 			trip.innerHTML = "";
 			trip.object = this;
 			this.trips.appendChild(trip);
@@ -157,3 +165,5 @@ class Score {
 }
 
 export { Score };
+
+let score = new Score('', '', '');
