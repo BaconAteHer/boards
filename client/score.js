@@ -73,7 +73,6 @@ class Score {
 					checked++;
 				}
 			}
-			console.log(checks[c], checked);
 			if (checked == 0) {
 				count.value = "";
 			} else {

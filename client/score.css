@@ -31,9 +31,9 @@ table { width: 100%; }
 div > span { display: block }
 div.previous > span { display: table-cell; }
 
-input { width: 2em; }
+table input { width: 2em; margin: 0; }
 .jammer > input { width: 4em; }
-td { text-align: center; }
+td { text-align: center; margin: 0; }
 
 tr.header { font-size: 6pt; color: white; background: black ! important; height: 4em; }
 
