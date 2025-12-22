@@ -8,13 +8,17 @@
 	#sk .check { width: 0.145in ! important; }
 	#sk tr { height: 0.235in ! important; }
 	#sk .trip { width: 0.53in; }
+	th.rot { transform: rotate(270deg); }
 }
 
 div > span { display: block }
 div.previous > span { display: table-cell; }
 
+input { width: 2em; }
+.jammer > input { width: 4em; }
+td { text-align: center; }
+
 tr.header { font-size: 6pt; color: white; background: black ! important; height: 4em; }
-th.rot { transform: rotate(270deg); }
 
 #sk > div { width: 95vw; padding: 0; margin: 0; }
 /* div.trips { width: 100%; } */

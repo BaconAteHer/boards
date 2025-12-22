@@ -1,169 +1,72 @@
 import { Toggle } from "./toggle.js"
 import { Skater } from "./skater.js"
 
+import { bind_functions } from "./boards.js"
+
 class Score {
 	constructor() {
+		this.current_jam = 0;
+
+		this.next_jam(null);
+		bind_functions(this, Score);
+
+	}
+
+	next_line(sp) {
 		const tbody = document.querySelector("tbody");
 		const template = document.querySelector("template");
 		const clone = document.importNode(template.content, true);
-		//let td = clone.querySelectorAll("td");
+		let td = clone.querySelectorAll("input");
+		for (let i = 0; i < td.length; i++) {
+			td[i].onchange = this.update_jam;
+		}
 		tbody.appendChild(clone);
-	}
-	
-	old_constructor(div, parent, jamNumber) {
-		this.parent = parent;
-
-		this.div = document.createElement("div");
-		this.div.object = this;
-
-		this.jaminfo = document.createElement("div");
-		this.jaminfo.className = "jaminfo";
-
-		this.jam = document.createElement("span");
-		this.jam.className = "jam"
-		this.jam.innerHTML = jamNumber;
-		this.jaminfo.appendChild(this.jam);
-
-		/* temp fake data */
-		let roster = [
-			{number: "5309", name: "Jenny"},
-			{number: "867", name: "Tutone"},
-			{number: "9000", name: "Goku" },
-		];
-
-		this.jammer = new Skater("jammer", roster);
-		this.jaminfo.appendChild(this.jammer.element);
-
-		for (var toggle of ["lost", "lead", "call", "inj", "ni"]) {
-			this[toggle] = new Toggle(toggle);
-			this.jaminfo.appendChild(this[toggle].element);
-		}
-		this.div.appendChild(this.jaminfo);
-
-		this.trips = document.createElement("div");
-		this.trips.className = "trips";
-		for (var i = 2; i <= 10; i++) {
-			let trip = document.createElement("span");
-			trip.className = "trip";
-			trip.type = "number";
-			trip.min = 0;
-			trip.max = 4;
-			trip.onkeypress = this.updateTrip;
-			trip.onblur = this.changeTrip;
-			trip.contentEditable = "true"; //"plaintext-only";
-			trip.innerHTML = "";
-			trip.object = this;
-			this.trips.appendChild(trip);
-		}
-		this.div.appendChild(this.trips);
-
-		this.totals = document.createElement("div");
-		this.totals.className = "totals";
-		for (var field of ["jam-total", "game-total"]) {
-			this[field] = document.createElement("span");
-			this[field].className = field;
-			this[field].innerHTML = "";
-			this.totals.appendChild(this[field]);
-		}
-		this.div.appendChild(this.totals);
-
-		div.appendChild(this.div);
-		div.className = "current";
-
-		window.onkeypress = function(ev) {
-			let div = document.getElementsByClassName("current")[0];
-			console.log(div);
-			if (div.object.hotkey(ev.key)) {
-				return false;
-			}
-		}
-	}
-
-	hotkey(key) {
-		switch (key) {
-		case '.':
-			this.nextSibling.innerHTML = ".";
-			this.nextSibling.focus();
-			return true;
-
-		case 't':
-			this.object.lost.toggle();
-			return true;
-
-		case 'l':
-			this.object.lead.toggle();
-			return true;
-
-		case 'c':
-			this.object.call.toggle();
-			return true;
-
-		case 'i':
-			this.object.inj.toggle();
-			return true;
-
-		case 'n':
-			this.object.ni.toggle();
-			return true;
-
-		case 's':
-			// star pass
-			return true;
-		}
-
-		return false;
-	}
-
-	updateTrip(ev) {
-		// if (is "enter") {
-		//	new jam
-		// }
-
-		if (this.object.hotkey()) {
-			return false;
-		}
-
-		switch (ev.key) {
-			case '.':
-				// move to the next cell with a dot in it
-
-		}
-		if ("0123456789".indexOf(ev.key) == -1) {
-			return false;
-		}
-	}
-
-	changeTrip() {
-		let trips = this.parentNode.getElementsByClassName("trip");
-		let jamTotal = 0;
-		for (var i = 0; i < trips.length; i++) {
-			let points = parseInt(trips[i].innerHTML);
-			if (!isNaN(points)) {
-				jamTotal += points;
-			}
-		}
-		this.object["jam-total"].innerHTML = jamTotal;
-
-		/* TODO: game total thus far */
-
-		if (parseInt(this.innerHTML) > 4) {
-			this.className = "trip invalid";
+		this.current = tbody.lastChild;
+		
+		if (sp) {
+			this.current.querySelector(".jam").querySelector("output").value = "SP";
 		} else {
-			this.className = "trip";
+			this.current.querySelector(".jam").querySelector("output").value = ++this.current_jam;
 		}
+		this.current.querySelector(".jammer").querySelector("input").focus();
 	}
 
-	nextJam() {
-		console.log("next jam");
-		this.div.className = "score previous";
-		this.object.parent.push(new Score(document.getElementById("sk"), this.object.parent));
+	next_jam(e) {
+		this.next_line(false);
 	}
 
-	addPlayer(p) {
-		this.players.add(p)
+	star_pass(e) {
+		this.next_line(true);
+	}
+
+	update_jam(e) {
+		let el = e.target;
+		console.log(el);
+		while (el && el.tagName != "TR") {
+			el = el.parentNode;
+			console.log("new el", el);
+		}
+		let trips = el.querySelectorAll(".trip input");
+		var sum = 0;
+		for (let i = 0; i < trips.length; i++) {
+			let v = trips[i].value ? parseInt(trips[i].value) : 0;
+			sum += v;
+			console.log(sum);
+		}
+
+		let jam_total = el.querySelector(".jam-total output");
+		jam_total.value = sum;
+
+		let jt = document.querySelectorAll(".jam-total output");
+		let gt = document.querySelectorAll(".game-total output");
+		let total = 0;
+		for (let i = 0; i < jt.length; i++) {
+			total += parseInt(jt[i].value);
+			gt[i].value = total;
+		}
 	}
 }
 
 export { Score };
 
-let score = new Score('', '', '');
+let score = new Score();

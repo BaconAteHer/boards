@@ -11,7 +11,7 @@
 
 <div id="nav"></div>
 
-<div id="sk" boards-label="Scorekeeper" boards-per-team="yes" boards-per-period="yes">
+<div id="sk">
 <br>
 <div class="metadata">
 <span class="team-name" id="sk-team">Team</span>
@@ -44,24 +44,24 @@
 </tr></thead>
 <tbody>
 	<template><tr>
-	<td class="jam"></td>
-	<td class="jammer"></td>
-	<td class="lost"></td>
-	<td class="lead"></td>
-	<td class="call"></td>
-	<td class="inj"></td>
-	<td class="ni"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="trip"></td>
-	<td class="jam-total"></td>
-	<td class="game-total"></td>
+	<td class="jam"><output></input></td>
+	<td class="jammer"><input list="jammers"></input></td>
+	<td class="lost"><input type="checkbox" tabindex="-1"></input></td>
+	<td class="lead"><input type="checkbox" tabindex="-1"></input></td>
+	<td class="call"><input type="checkbox" tabindex="-1"></input></td>
+	<td class="inj"><input type="checkbox" tabindex="-1"></input></td>
+	<td class="ni"><input type="checkbox"></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="trip"><input></input></td>
+	<td class="jam-total"><output></output></td>
+	<td class="game-total"><output></output></td>
 	</tr></template>
 </tbody>
 <tfoot><tr class="footer">
@@ -86,9 +86,14 @@
 </tr></tfoot>
 </table>
 <div class="controls">
-	<input class="star-pass-button" type="button" value="Star Pass">
-	<input class="next-jam-button" type="button" value="Next Jam">
+	<button fn="star_pass">Star Pass</button>
+	<button fn="next_jam">Next Jam</button>
 </div>
+<datalist id="jammers">
+	<option value="5309">5309</option>
+	<option value="867">867</option>
+	<option value="9000">9000</option>
+</datalist>
 </div>
 
 <script>
