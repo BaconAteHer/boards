@@ -1,7 +1,9 @@
-import { bind_functions, get_attr } from './boards.js';
+import { bind_functions, get_attr } from "./boards.js";
+import { Game } from "./game.js";
 
 class Scoreboard {
 	constructor() {
+		this.game = new Game();
 		this.jam = 0;
 		this.period = 1;
 
@@ -14,6 +16,10 @@ class Scoreboard {
 	set_trip_points(e) {
 		console.log("Team", get_attr(e.target, "team"));
 		console.log(e.target.getAttribute("value"));
+		let f = document.querySelector('iframe[team="' + get_attr(e.target, "team") + '"]');
+		let trips = f.querySelectorAll("input");
+		console.log(trips);
+		trips[trips.length - 1].value = e.target.getAttribute("value");
 	}
 
 	start_jam(e) {

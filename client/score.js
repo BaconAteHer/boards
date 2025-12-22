@@ -1,15 +1,53 @@
-import { Toggle } from "./toggle.js"
-import { Skater } from "./skater.js"
-
+import { Game } from "./game.js"
 import { bind_functions } from "./boards.js"
 
-class Score {
+export class Score {
 	constructor() {
-		this.current_jam = 0;
-
-		this.next_jam(null);
 		bind_functions(this, Score);
 
+		this.game = new Game();
+		let values = this.game.get("score"); // TODO: team
+		if (!values) {
+			values = [];
+		}
+
+		this.current_jam = 0;
+		let io = document.querySelectorAll("tbody input, tbody output");
+		while (!io || io.length < values.length) {
+			this.next_jam(null);
+			io = document.querySelectorAll("tbody input, tbody output");
+		}
+
+		for (let i = 0; i < io.length; i++) {
+			if (io[i].getAttribute("type") == "checkbox") {
+				io[i].checked = values[i];
+			} else {
+				io[i].value = values[i];
+			}
+		}
+
+		this.update_period_totals();
+
+		if (this.current_jam == 0) {
+			this.next_jam(null);
+		}
+	}
+
+	obj() {
+		let io = document.querySelectorAll("tbody input, tbody output");
+		let val = [];
+		for (let i = 0; i < io.length; i++) {
+			if (io[i].getAttribute("type") == "checkbox") {
+				val.push(io[i].checked);
+			} else {
+				val.push(io[i].value);
+			}
+		}
+		return val;
+	}
+
+	save() {
+		this.game.set("score", this.obj());
 	}
 
 	next_line(sp) {
@@ -18,7 +56,8 @@ class Score {
 		const clone = document.importNode(template.content, true);
 		let td = clone.querySelectorAll("input");
 		for (let i = 0; i < td.length; i++) {
-			td[i].onchange = this.update_jam;
+			//td[i].onchange = this.update_jam;
+			td[i].addEventListener("change", this.update_jam);
 		}
 		tbody.appendChild(clone);
 		this.current = tbody.lastChild;
@@ -28,6 +67,7 @@ class Score {
 		} else {
 			this.current.querySelector(".jam").querySelector("output").value = ++this.current_jam;
 		}
+		this.current.setAttribute("jam", this.current_jam);
 		this.current.querySelector(".jammer").querySelector("input").focus();
 	}
 
@@ -62,6 +102,14 @@ class Score {
 			gt[i].value = total;
 		}
 
+		this.update_period_totals();
+		this.save();
+
+		/* TODO: trip totals */
+		/* TODO: period point totals */
+	}
+
+	update_period_totals() {
 		const tfoot = document.querySelector("tfoot");
 		const checks = [ "lost", "lead", "call", "inj", "ni" ];
 		for (var c in checks) {
@@ -79,12 +127,7 @@ class Score {
 				count.value = checked;
 			}
 		}
-
-		/* TODO: trip totals */
-		/* TODO: period point totals */
 	}
 }
-
-export { Score };
 
 let score = new Score();
